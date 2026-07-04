@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 int xn(int x, int n)
 {
@@ -157,7 +158,30 @@ double polynomial(double a[], int n, double x)
     return result;
 }
 
-int main()
+void dec_to_bin(int x)
+{
+    char data[33];
+    int index = 31;
+
+    data[32] = '\0';
+
+    if (x == 0)
+    {
+        data[index] = '0';
+        printf("Binary of 0 = %s\n", &data[index]);
+        return;
+    }
+
+    while (x > 0 && index >= 0)
+    {
+        data[index--] = (char)('0' + (x % 2));
+        x /= 2;
+    }
+
+    printf("Binary = %s\n", &data[index + 1]);
+}
+
+int main(void)
 {
     int x, n;
     printf("Enter x and n for x^n: ");
@@ -197,8 +221,10 @@ int main()
     {
         printf("Invalid! Please enter a non-negative degree: ");
         while (getchar() != '\n')
-            ;
+        {
+        }
     }
+
     double coefficients[degree + 1];
     printf("Enter %d coefficients (a[0] to a[%d]):\n", degree + 1, degree);
     for (int i = 0; i <= degree; i++)
@@ -206,10 +232,12 @@ int main()
         printf("a[%d]: ", i);
         scanf("%lf", &coefficients[i]);
     }
+
     double x_value;
     printf("Enter x: ");
     scanf("%lf", &x_value);
     printf("P(x) = %.4f\n", polynomial(coefficients, degree, x_value));
 
+    dec_to_bin(10);
     return 0;
 }
